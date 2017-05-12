@@ -1,0 +1,4 @@
+*~
+*.swp
+rust/target
+mruby

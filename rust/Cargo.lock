@@ -1,0 +1,33 @@
+[root]
+name = "mruby-rust-poop"
+version = "0.0.1"
+dependencies = [
+ "mferuby 0.1.0 (git+https://github.com/hone/mferuby.git?branch=wip)",
+]
+
+[[package]]
+name = "libc"
+version = "0.2.22"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "libmruby-sys"
+version = "0.1.0"
+source = "git+https://github.com/hone/mferuby.git?branch=wip#5d973de47983cbe9cb6c6212ddcc0ac8dcfa4897"
+dependencies = [
+ "libc 0.2.22 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "mferuby"
+version = "0.1.0"
+source = "git+https://github.com/hone/mferuby.git?branch=wip#5d973de47983cbe9cb6c6212ddcc0ac8dcfa4897"
+dependencies = [
+ "libc 0.2.22 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libmruby-sys 0.1.0 (git+https://github.com/hone/mferuby.git?branch=wip)",
+]
+
+[metadata]
+"checksum libc 0.2.22 (registry+https://github.com/rust-lang/crates.io-index)" = "babb8281da88cba992fa1f4ddec7d63ed96280a1a53ec9b919fd37b53d71e502"
+"checksum libmruby-sys 0.1.0 (git+https://github.com/hone/mferuby.git?branch=wip)" = "<none>"
+"checksum mferuby 0.1.0 (git+https://github.com/hone/mferuby.git?branch=wip)" = "<none>"
