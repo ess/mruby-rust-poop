@@ -38,7 +38,7 @@ pub extern "C" fn mrb_poop_hi(mrb: *mut sys::mrb_state, this: sys::mrb_value) ->
 pub extern "C" fn mrb_mruby_rust_poop_gem_init(mrb: *mut sys::mrb_state) {
   unsafe {
     let rust_poop = sys::mrb_define_class(mrb, cstr!("Poop"), sys::mrb_state_object_class(mrb));
-    sys::mrb_define_method(mrb, rust_poop, cstr!("hi"), mrb_poop_hi as sys::mrb_func_t, sys::MRB_ARGS_NONE();
+    sys::mrb_define_method(mrb, rust_poop, cstr!("hi"), mrb_poop_hi as sys::mrb_func_t, sys::MRB_ARGS_NONE());
   }
 }
 
