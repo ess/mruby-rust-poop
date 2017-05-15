@@ -33,7 +33,7 @@ pub extern "C" fn mrb_poop_hi(mrb: *mut sys::mrb_state, this: sys::mrb_value) ->
 
   println!("name: {}", it.name);
 
-  sys::nil()
+  unsafe {sys::nil()}
 }
 
 #[no_mangle]
