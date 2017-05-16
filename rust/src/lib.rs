@@ -19,8 +19,29 @@ lazy_static! {
 #[no_mangle]
 extern "C" fn free_poop(mrb: *mut sys::mrb_state, map: Box<Poop>) {}
 
-pub struct Poop {
-  name: String
+pub extern struct Poop<'a> {
+  name: &'a str'
+}
+}
+#[no_mangle]
+pub extern "C" fn mrb_poop_init(mrb: *mut sys::mrb_state, this: sys::mrb_value) -> sys::mrb_value {
+  let mut datap = unsafe {
+    sys::mrb_data_get_ptr(mrb, this, &poop_type as &sys::mrb_data_type)
+  }
+
+  let mut name: sys::mrb_value = unsafe {mem::uninitialized()};
+
+  unsafe {
+    sys::mrb_get_args(mrb, cstr!("S"), &mut name);
+  }
+
+  let rname = mferuby::mruby_str_to_rust_string(name).unwrap();
+
+  println!("mrb_poop_init got name: {}", rname);
+
+  datap.name = mferuby::mruby_str_to_rust_string(name).unwrap();
+
+  this
 }
 
 #[no_mangle]
@@ -41,6 +62,7 @@ pub extern "C" fn mrb_mruby_rust_poop_gem_init(mrb: *mut sys::mrb_state) {
   unsafe {
     let rust_poop = sys::mrb_define_class(mrb, cstr!("Poop"), sys::mrb_state_object_class(mrb));
     sys::MRB_SET_INSTANCE_TT(rust_poop, sys::mrb_vtype::MRB_TT_DATA);
+    sys::mrb_define_method(mrb, rust_poop, cstr!("initialize"), mrb_poop_init as sys::mrb_func_t, sys::MRB_ARGS_REQ(1));
     sys::mrb_define_method(mrb, rust_poop, cstr!("hi"), mrb_poop_hi as sys::mrb_func_t, sys::MRB_ARGS_NONE());
   }
 }
