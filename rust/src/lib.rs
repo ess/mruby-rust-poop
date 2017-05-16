@@ -24,30 +24,30 @@ pub struct Poop {
   name: CString
 }
 
-#[no_mangle]
-pub extern "C" fn mrb_poop_init(mrb: *mut sys::mrb_state, this: sys::mrb_value) -> sys::mrb_value {
-  let datap = unsafe {
-    sys::mrb_data_get_ptr(mrb, this, &poop_type as &sys::mrb_data_type)
-  };
-
-  let mut name: sys::mrb_value = unsafe {mem::uninitialized()};
-
-  unsafe {
-    sys::mrb_get_args(mrb, cstr!("S"), &mut name);
-  }
-
-  let rname = mferuby::mruby_str_to_rust_string(name).unwrap();
-
-  println!("mrb_poop_init got name: {}", rname);
-
-  let rdata = Poop {name: rname.as_str()};
-
-  let mrb_obj = mferuby::Mrb::new(mrb);
-  let mybox = Box::new(rdata);
-  let klass = unsafe {sys::mrb_class_get(mrb, cstr!("Poop"))};
-  unsafe {sys::mrb_obj_value(mrb_obj.data_object_alloc::<Poop>(klass, mybox, &poop_type))}
-
-}
+//#[no_mangle]
+//pub extern "C" fn mrb_poop_init(mrb: *mut sys::mrb_state, this: sys::mrb_value) -> sys::mrb_value {
+//  let datap = unsafe {
+//    sys::mrb_data_get_ptr(mrb, this, &poop_type as &sys::mrb_data_type)
+//  };
+//
+//  let mut name: sys::mrb_value = unsafe {mem::uninitialized()};
+//
+//  unsafe {
+//    sys::mrb_get_args(mrb, cstr!("S"), &mut name);
+//  }
+//
+//  let rname = mferuby::mruby_str_to_rust_string(name).unwrap();
+//
+//  println!("mrb_poop_init got name: {}", rname);
+//
+//  let rdata = Poop {name: rname.as_str()};
+//
+//  let mrb_obj = mferuby::Mrb::new(mrb);
+//  let mybox = Box::new(rdata);
+//  let klass = unsafe {sys::mrb_class_get(mrb, cstr!("Poop"))};
+//  unsafe {sys::mrb_obj_value(mrb_obj.data_object_alloc::<Poop>(klass, mybox, &poop_type))}
+//
+//}
 
 #[no_mangle]
 pub extern "C" fn mrb_poop_hi(mrb: *mut sys::mrb_state, this: sys::mrb_value) -> sys::mrb_value {
