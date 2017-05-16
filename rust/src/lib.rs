@@ -27,7 +27,7 @@ pub struct Poop<'a> {
 pub extern "C" fn mrb_poop_init(mrb: *mut sys::mrb_state, this: sys::mrb_value) -> sys::mrb_value {
   let datap = unsafe {
     sys::mrb_data_get_ptr(mrb, this, &poop_type as &sys::mrb_data_type)
-  }
+  };
 
   let mut name: sys::mrb_value = unsafe {mem::uninitialized()};
 
