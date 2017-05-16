@@ -57,7 +57,7 @@ pub extern "C" fn mrb_poop_hi(mrb: *mut sys::mrb_state, this: sys::mrb_value) ->
 
   let it: Poop = unsafe {mem::transmute(datap)};
 
-  println!("name: {}", mferuby::mruby_str_to_rust_string(it.name).unwrap());
+  println!("name: {}", it.name.to_str().unwrap());
 
   unsafe {sys::nil()}
 }
