@@ -20,12 +20,12 @@ lazy_static! {
 extern "C" fn free_poop(mrb: *mut sys::mrb_state, map: Box<Poop>) {}
 
 pub extern struct Poop<'a> {
-  name: &'a str'
+  name: &'a str
 }
-}
+
 #[no_mangle]
 pub extern "C" fn mrb_poop_init(mrb: *mut sys::mrb_state, this: sys::mrb_value) -> sys::mrb_value {
-  let mut datap = unsafe {
+  let datap = unsafe {
     sys::mrb_data_get_ptr(mrb, this, &poop_type as &sys::mrb_data_type)
   }
 
