@@ -19,7 +19,7 @@ lazy_static! {
 #[no_mangle]
 extern "C" fn free_poop(mrb: *mut sys::mrb_state, map: Box<Poop>) {}
 
-pub extern struct Poop<'a> {
+pub struct Poop<'a> {
   name: &'a str
 }
 
