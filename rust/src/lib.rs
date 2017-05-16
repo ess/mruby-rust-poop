@@ -20,7 +20,7 @@ lazy_static! {
 extern "C" fn free_poop(mrb: *mut sys::mrb_state, map: Box<Poop>) {}
 
 pub struct Poop<'a> {
-  name: &'a str
+  name: CString
 }
 
 #[no_mangle]
@@ -66,7 +66,7 @@ pub extern "C" fn mrb_mruby_rust_poop_gem_init(mrb: *mut sys::mrb_state) {
   unsafe {
     let rust_poop = sys::mrb_define_class(mrb, cstr!("Poop"), sys::mrb_state_object_class(mrb));
     sys::MRB_SET_INSTANCE_TT(rust_poop, sys::mrb_vtype::MRB_TT_DATA);
-    sys::mrb_define_method(mrb, rust_poop, cstr!("initialize"), mrb_poop_init as sys::mrb_func_t, sys::MRB_ARGS_REQ(1));
+    //sys::mrb_define_method(mrb, rust_poop, cstr!("initialize"), mrb_poop_init as sys::mrb_func_t, sys::MRB_ARGS_REQ(1));
     sys::mrb_define_method(mrb, rust_poop, cstr!("hi"), mrb_poop_hi as sys::mrb_func_t, sys::MRB_ARGS_NONE());
   }
 }
