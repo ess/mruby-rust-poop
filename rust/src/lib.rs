@@ -39,7 +39,7 @@ pub extern "C" fn mrb_poop_init(mrb: *mut sys::mrb_state, this: sys::mrb_value) 
 
   println!("mrb_poop_init got name: {}", rname);
 
-  let rdata = &Poop {name: rdata.as_str()};
+  let rdata = Poop {name: rdata.as_str()};
 
   let mrb_obj = mferuby::Mrb::new(mrb);
   let mybox = Box::new(rdata);
