@@ -39,9 +39,13 @@ pub extern "C" fn mrb_poop_init(mrb: *mut sys::mrb_state, this: sys::mrb_value) 
 
   println!("mrb_poop_init got name: {}", rname);
 
-  datap.name = mferuby::mruby_str_to_rust_string(name).unwrap();
+  let rdata = &Poop {name: rdata.as_str()};
 
-  this
+  let mrb_obj = mferuby::Mrb::new(mrb);
+  let mybox = Box::new(rdata);
+  let klass = unsafe {sys::mrb_class_get(mrb, cstr!("Poop"))};
+  unsafe {sys::mrb_obj_value(mrb_obj.data_object_alloc::<Poop>(klass, mybox, &poop_type))}
+
 }
 
 #[no_mangle]
