@@ -19,7 +19,8 @@ lazy_static! {
 #[no_mangle]
 extern "C" fn free_poop(mrb: *mut sys::mrb_state, map: Box<Poop>) {}
 
-pub struct Poop<'a> {
+//pub struct Poop<'a> {
+pub struct Poop {
   name: CString
 }
 
@@ -56,7 +57,7 @@ pub extern "C" fn mrb_poop_hi(mrb: *mut sys::mrb_state, this: sys::mrb_value) ->
 
   let it: Poop = unsafe {mem::transmute(datap)};
 
-  println!("name: {}", it.name);
+  println!("name: {}", mferuby::mrb_string_to_rust_string(it.name).unwrap());
 
   unsafe {sys::nil()}
 }
